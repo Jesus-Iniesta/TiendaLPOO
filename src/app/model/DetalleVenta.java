@@ -13,8 +13,7 @@ public class DetalleVenta {
     private double precio_unitario;
     private double subtotal;
 
-    public DetalleVenta(int id_detalle, int id_venta, int id_producto, int cantidad, double precio_unitario, double subtotal) {
-        this.id_detalle = id_detalle;
+    public DetalleVenta(int id_venta, int id_producto, int cantidad, double precio_unitario, double subtotal) {
         this.id_venta = id_venta;
         this.id_producto = id_producto;
         this.cantidad = cantidad;

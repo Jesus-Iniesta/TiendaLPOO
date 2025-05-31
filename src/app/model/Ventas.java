@@ -13,6 +13,15 @@ public class Ventas {
     private LocalDateTime fecha;
     private double total;
 
+    public Ventas() {
+    }
+
+    public Ventas(LocalDateTime fecha, double total) {
+        this.fecha = fecha;
+        this.total = total;
+    }
+
+
     public Ventas(int id_cliente, LocalDateTime fecha, double total) {
         this.id_cliente = id_cliente;
         this.fecha = fecha;

@@ -10,13 +10,20 @@ import javax.swing.text.TextAction;
 public class Categoria {
     private int id_categoria;
     private String nombre_categorial;
-    private TextAction descripcion;
+    private String descripcion;
 
-    public Categoria(int id_categoria, String nombre_categorial, TextAction descripcion) {
+    public Categoria( String nombre_categorial, String descripcion) {
+        this.nombre_categorial = nombre_categorial;
+        this.descripcion = descripcion;
+    }
+
+    public Categoria(int id_categoria, String nombre_categorial, String descripcion) {
         this.id_categoria = id_categoria;
         this.nombre_categorial = nombre_categorial;
         this.descripcion = descripcion;
     }
+    
+    
 
     public String getNombre_categorial() {
         return nombre_categorial;
@@ -26,11 +33,11 @@ public class Categoria {
         this.nombre_categorial = nombre_categorial;
     }
 
-    public TextAction getDescripcion() {
+    public String getDescripcion() {
         return descripcion;
     }
 
-    public void setDescripcion(TextAction descripcion) {
+    public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
 
