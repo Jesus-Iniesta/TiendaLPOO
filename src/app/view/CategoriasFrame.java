@@ -23,7 +23,7 @@ public class CategoriasFrame extends javax.swing.JFrame {
         DefaultTableModel modeloTabla = (DefaultTableModel)tablaCat.getModel();
         modeloTabla.setRowCount(0);
         
-        int [] anchos = {5,80,150};
+        int [] anchos = {2,50,350};
         for(int i = 0; i<tablaCat.getColumnCount();i++){
             tablaCat.getColumnModel().getColumn(i).setPreferredWidth(anchos[i]);
         }
@@ -99,6 +99,7 @@ public class CategoriasFrame extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tablaCat.setRowHeight(40);
         tablaCat.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tablaCatMouseClicked(evt);
@@ -153,7 +154,7 @@ public class CategoriasFrame extends javax.swing.JFrame {
                         .addComponent(JBtnModificar))
                     .addComponent(JBtnLimpiar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 511, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 835, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(

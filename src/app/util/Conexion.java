@@ -11,14 +11,16 @@ public class Conexion {
     public static Connection getConexion(){
         
         String url = "jdbc:mysql://localhost:3306/tienda_alfonso";
-        Connection conn = null;
-        try{
-            conn = DriverManager.getConnection(url , "admin_tienda","TiendaAlfonso324.");
-            
-        }catch(SQLException e){
-            System.out.println("Error de conexion: "+e);
+        String usuario = "admin_tienda";
+        String contraseña = "TiendaAlfonso324.";
+        Connection conexion = null;
+        try {
+            conexion = DriverManager.getConnection(url, usuario, contraseña);
+            System.out.println("Conexión exitosa");
+        } catch (SQLException e) {
+            System.out.println("Error al conectar: " + e.getMessage());
         }
-        return conn;
+        return conexion;
     }
 
 }

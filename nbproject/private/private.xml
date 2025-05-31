@@ -3,7 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/repos/alfonso_tienda/Tienda_Alfonso/src/app/model/PedidoProveedor.java</file>
+            <file>file:/D:/repos/alfonso_tienda/Tienda_Alfonso/src/app/view/CategoriasFrame.java</file>
+            <file>file:/D:/repos/alfonso_tienda/Tienda_Alfonso/src/app/controller/CategoriaDaoImp.java</file>
+            <file>file:/D:/repos/alfonso_tienda/Tienda_Alfonso/src/app/model/Categoria.java</file>
             <file>file:/D:/repos/alfonso_tienda/Tienda_Alfonso/src/app/util/Conexion.java</file>
         </group>
     </open-files>

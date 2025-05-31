@@ -81,7 +81,7 @@ public class CategoriaDaoImp implements CategoriaDao{
     public void construirTabla(DefaultTableModel modeloTabla) {
         try{
             Connection con = Conexion.getConexion();
-            String query = "select id_categorias, nombre_categoria, descripcion FROM categorias";
+            String query = "select id_categoria, nombre_categoria, descripcion FROM categorias";
             PreparedStatement ps = con.prepareStatement(query);
             
             ResultSet rs = ps.executeQuery();
