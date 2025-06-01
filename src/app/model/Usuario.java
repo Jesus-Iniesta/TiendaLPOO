@@ -15,12 +15,12 @@ public class Usuario {
     private String rol;
     private LocalDateTime fecha_registro;
 
-    public Usuario(String nombre_usuario, String contrasenia, String nombre_completo, String rol, LocalDateTime fecha_registro) {
+    public Usuario(String nombre_usuario, String contrasenia, String nombre_completo, String rol) {
         this.nombre_usuario = nombre_usuario;
         this.contrasenia = contrasenia;
         this.nombre_completo = nombre_completo;
         this.rol = rol;
-        this.fecha_registro = fecha_registro;
+        this.fecha_registro = LocalDateTime.now();
     }
     
 

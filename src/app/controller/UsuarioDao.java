@@ -8,6 +8,7 @@ import app.model.Usuario;
  */
 public interface UsuarioDao {
     
-    public abstract Usuario Login(Usuario nombreUsuario, Usuario contraseniaUsuario);
-    public abstract void Registro(Usuario nombreUsuario, Usuario nombreCompleto, Usuario rol, Usuario contraseniaUsuario,Usuario fechaRegistro);
+    public abstract boolean Login(String usuario, String contrasenia);
+    public abstract void Registro(Usuario usuario);
+    public abstract String HashearContrasenia(String password);
 }
