@@ -8,7 +8,6 @@ package app.model;
 public class Cliente {
     private String nombre;
     private String apellido_paterno;
-    private String apellido_materno;
     private String telefono;
     private String calle;
     private String colonia;
@@ -16,10 +15,9 @@ public class Cliente {
     private String cp;
     private String rfc;
 
-    public Cliente(String nombre, String apellido_paterno, String apellido_materno, String telefono, String calle, String colonia, String ciudad, String cp, String rfc) {
+    public Cliente(String nombre, String apellido_paterno, String telefono, String calle, String colonia, String ciudad, String cp, String rfc) {
         this.nombre = nombre;
         this.apellido_paterno = apellido_paterno;
-        this.apellido_materno = apellido_materno;
         this.telefono = telefono;
         this.calle = calle;
         this.colonia = colonia;
@@ -44,14 +42,6 @@ public class Cliente {
 
     public void setApellido_paterno(String apellido_paterno) {
         this.apellido_paterno = apellido_paterno;
-    }
-
-    public String getApellido_materno() {
-        return apellido_materno;
-    }
-
-    public void setApellido_materno(String apellido_materno) {
-        this.apellido_materno = apellido_materno;
     }
 
     public String getTelefono() {
