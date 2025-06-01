@@ -3,7 +3,6 @@ package app.controller;
 
 import app.model.Cliente;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.DefaultTableModel;
 import app.util.Conexion;
 import java.sql.*;
 import javax.swing.JOptionPane;
