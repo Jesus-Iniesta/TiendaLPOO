@@ -1,8 +1,9 @@
 
 package app.model;
 
-import java.security.Timestamp;
-import javax.swing.text.TextAction;
+
+import java.time.LocalDate;
+
 
 /**
  *
@@ -14,11 +15,11 @@ public class Proveedor {
     private String apellido_materno;
     private String empresa;
     private String telefono;
-    private TextAction direccion;
+    private String direccion;
     private String correo;
-    private Timestamp fecha_registro;
+    private LocalDate fecha_registro;
 
-    public Proveedor(String nombre, String apellido_paterno, String apellido_materno, String empresa, String telefono, TextAction direccion, String correo, Timestamp fecha_registro) {
+    public Proveedor(String nombre, String apellido_paterno, String apellido_materno, String empresa, String telefono, String direccion, String correo, LocalDate fecha_registro) {
         this.nombre = nombre;
         this.apellido_paterno = apellido_paterno;
         this.apellido_materno = apellido_materno;
@@ -69,11 +70,11 @@ public class Proveedor {
         this.telefono = telefono;
     }
 
-    public TextAction getDireccion() {
+    public String getDireccion() {
         return direccion;
     }
 
-    public void setDireccion(TextAction direccion) {
+    public void setDireccion(String direccion) {
         this.direccion = direccion;
     }
 
@@ -85,11 +86,11 @@ public class Proveedor {
         this.correo = correo;
     }
 
-    public Timestamp getFecha_registro() {
+    public LocalDate getFecha_registro() {
         return fecha_registro;
     }
 
-    public void setFecha_registro(Timestamp fecha_registro) {
+    public void setFecha_registro(LocalDate fecha_registro) {
         this.fecha_registro = fecha_registro;
     }
     

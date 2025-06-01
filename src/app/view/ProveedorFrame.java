@@ -4,6 +4,10 @@
  */
 package app.view;
 
+import app.model.Proveedor;
+import java.time.LocalDate;
+import app.controller.ProveedorDaoImp;
+import javax.swing.table.DefaultTableModel;
 /**
  *
  * @author pigim
@@ -11,12 +15,37 @@ package app.view;
 public class ProveedorFrame extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ProveedorFrame.class.getName());
+    
+    private ProveedorDaoImp proveedorImp = new ProveedorDaoImp();
+    
+    public void cargarTabla() {
+        DefaultTableModel modeloTabla = (DefaultTableModel) tablaProveedor.getModel();
+        modeloTabla.setRowCount(0);
 
+        int[] anchos = {2, 70, 70, 70, 8, 8, 80, 50, 50, 50};
+        for (int i = 0; i < tablaProveedor.getColumnCount(); i++) {
+            tablaProveedor.getColumnModel().getColumn(i).setPreferredWidth(anchos[i]);
+        }
+        proveedorImp.construirTabla(modeloTabla);
+
+    }
+    public void limpiar(){
+        JtextNombre.setText("");
+        JtextApm.setText("");
+        JtextApp1.setText("");
+        JtextCorreo.setText("");
+        JtextEmpresa.setText("");
+        JtextTel.setText("");
+        jTextDireccion.setText("");
+        jComboDia.setSelectedIndex(0);
+        jComboMes.setSelectedIndex(0);
+    }
     /**
      * Creates new form ProveedorFrame
      */
     public ProveedorFrame() {
         initComponents();
+        cargarTabla();
     }
 
     /**
@@ -28,21 +57,388 @@ public class ProveedorFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        JtextNombre = new javax.swing.JTextField();
+        JtextApm = new javax.swing.JTextField();
+        JtextApp1 = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        JtextTel = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        JtextEmpresa = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        JtextCorreo = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
+        jComboDia = new javax.swing.JComboBox<>();
+        jComboMes = new javax.swing.JComboBox<>();
+        jComboAnios = new javax.swing.JComboBox<>();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tablaProveedor = new javax.swing.JTable();
+        jBtnGuardar = new javax.swing.JButton();
+        jBtnEliminar = new javax.swing.JButton();
+        jBtnModificar = new javax.swing.JButton();
+        jBtnLimpiar = new javax.swing.JButton();
+        jLabel10 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTextDireccion = new javax.swing.JTextArea();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jPanel1.setToolTipText("");
+
+        jLabel2.setFont(new java.awt.Font("Lucida Fax", 1, 18)); // NOI18N
+        jLabel2.setText("Proveedor");
+
+        jLabel3.setFont(new java.awt.Font("Lucida Fax", 0, 14)); // NOI18N
+        jLabel3.setText("Nombre");
+
+        jLabel4.setFont(new java.awt.Font("Lucida Fax", 0, 14)); // NOI18N
+        jLabel4.setText("Apellido Paterno");
+
+        jLabel5.setFont(new java.awt.Font("Lucida Fax", 0, 14)); // NOI18N
+        jLabel5.setText("Apellido materno");
+
+        JtextNombre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JtextNombreActionPerformed(evt);
+            }
+        });
+
+        JtextApm.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JtextApmActionPerformed(evt);
+            }
+        });
+
+        JtextApp1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JtextApp1ActionPerformed(evt);
+            }
+        });
+
+        jLabel6.setFont(new java.awt.Font("Lucida Fax", 0, 14)); // NOI18N
+        jLabel6.setText("Empresa");
+
+        JtextTel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JtextTelActionPerformed(evt);
+            }
+        });
+
+        jLabel7.setFont(new java.awt.Font("Lucida Fax", 0, 14)); // NOI18N
+        jLabel7.setText("Correo");
+
+        JtextEmpresa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JtextEmpresaActionPerformed(evt);
+            }
+        });
+
+        jLabel8.setFont(new java.awt.Font("Lucida Fax", 0, 14)); // NOI18N
+        jLabel8.setText("Telefono");
+
+        JtextCorreo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JtextCorreoActionPerformed(evt);
+            }
+        });
+
+        jLabel9.setFont(new java.awt.Font("Lucida Fax", 0, 14)); // NOI18N
+        jLabel9.setText("Fecha");
+
+        jComboDia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31" }));
+
+        jComboMes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" }));
+
+        jComboAnios.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "2025" }));
+
+        tablaProveedor.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null}
+            },
+            new String [] {
+                "id", "Nombre", "Apellido P", "Apellido M", "Empresa", "Tel.", "Correo", "Direccion", "Fecha"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tablaProveedor.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablaProveedorMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tablaProveedor);
+
+        jBtnGuardar.setText("Guardar");
+        jBtnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnGuardarActionPerformed(evt);
+            }
+        });
+
+        jBtnEliminar.setText("Eliminar");
+        jBtnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnEliminarActionPerformed(evt);
+            }
+        });
+
+        jBtnModificar.setText("Modificar");
+        jBtnModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnModificarActionPerformed(evt);
+            }
+        });
+
+        jBtnLimpiar.setText("Limpiar");
+        jBtnLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnLimpiarActionPerformed(evt);
+            }
+        });
+
+        jLabel10.setFont(new java.awt.Font("Lucida Fax", 0, 14)); // NOI18N
+        jLabel10.setText("Direccion");
+
+        jTextDireccion.setColumns(20);
+        jTextDireccion.setRows(5);
+        jScrollPane2.setViewportView(jTextDireccion);
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(38, 38, 38)
+                                .addComponent(jComboDia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jComboMes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jComboAnios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(JtextEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(JtextNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(JtextApp1, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(JtextApm, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(68, 68, 68)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jBtnLimpiar)
+                                    .addComponent(jBtnModificar)
+                                    .addComponent(jBtnEliminar)
+                                    .addComponent(jBtnGuardar))))
+                        .addGap(107, 107, 107))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(JtextCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(JtextTel, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(30, 30, 30)))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 981, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel2)
+                .addGap(43, 43, 43)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(JtextNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jBtnGuardar))
+                .addGap(27, 27, 27)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(jBtnEliminar))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(JtextApp1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(30, 30, 30)
+                        .addComponent(jBtnModificar)))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(25, 25, 25)
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(JtextApm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(38, 38, 38)
+                        .addComponent(jBtnLimpiar)))
+                .addGap(30, 30, 30)
+                .addComponent(jLabel6)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(JtextEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel10))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(29, 29, 29)
+                        .addComponent(jLabel8)
+                        .addGap(32, 32, 32)
+                        .addComponent(JtextTel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel7)
+                        .addGap(18, 18, 18)
+                        .addComponent(JtextCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel9)
+                            .addComponent(jComboDia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jComboMes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jComboAnios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(16, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addComponent(jScrollPane1)
+                .addContainerGap())
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void JtextNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JtextNombreActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_JtextNombreActionPerformed
+
+    private void JtextApmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JtextApmActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_JtextApmActionPerformed
+
+    private void JtextApp1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JtextApp1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_JtextApp1ActionPerformed
+
+    private void JtextTelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JtextTelActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_JtextTelActionPerformed
+
+    private void JtextEmpresaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JtextEmpresaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_JtextEmpresaActionPerformed
+
+    private void JtextCorreoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JtextCorreoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_JtextCorreoActionPerformed
+
+    private void jBtnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnEliminarActionPerformed
+        int fila = tablaProveedor.getSelectedRow();
+        int id = Integer.parseInt(tablaProveedor.getValueAt(fila, 0).toString());
+        proveedorImp.EliminarProveedor(id);
+        cargarTabla();
+        limpiar();
+    }//GEN-LAST:event_jBtnEliminarActionPerformed
+
+    private void jBtnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnModificarActionPerformed
+        int fila = tablaProveedor.getSelectedRow();
+        int id = Integer.parseInt(tablaProveedor.getValueAt(fila, 0).toString());
+        LocalDate fecha = LocalDate.of(Integer.parseInt(jComboAnios.getSelectedItem().toString()), Integer.parseInt(jComboMes.getSelectedItem().toString()), Integer.parseInt(jComboDia.getSelectedItem().toString()));
+
+        Proveedor proveedor = new Proveedor(JtextNombre.getText(),
+                JtextApp1.getText(),
+                JtextApm.getText(),
+                JtextEmpresa.getText(),
+                JtextTel.getText(),
+                jTextDireccion.getText(),
+                JtextCorreo.getText(),
+                fecha);
+        
+        proveedorImp.ModificarProveedor(proveedor, id);
+        cargarTabla();
+        limpiar();
+    }//GEN-LAST:event_jBtnModificarActionPerformed
+
+    private void jBtnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnLimpiarActionPerformed
+       
+        limpiar();
+    }//GEN-LAST:event_jBtnLimpiarActionPerformed
+
+    private void jBtnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnGuardarActionPerformed
+        
+        LocalDate fecha = LocalDate.of(Integer.parseInt(jComboAnios.getSelectedItem().toString()), Integer.parseInt(jComboMes.getSelectedItem().toString()), Integer.parseInt(jComboDia.getSelectedItem().toString()));
+        Proveedor proveedor = new Proveedor(JtextNombre.getText(),
+                JtextApp1.getText(),
+                JtextApm.getText(),
+                JtextEmpresa.getText(),
+                JtextTel.getText(),
+                jTextDireccion.getText(),
+                JtextCorreo.getText(),
+                fecha);
+        
+        proveedorImp.GuardarProveedor(proveedor);
+        cargarTabla();
+    }//GEN-LAST:event_jBtnGuardarActionPerformed
+
+    private void tablaProveedorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaProveedorMouseClicked
+        int fila = tablaProveedor.getSelectedRow();
+        int id = Integer.parseInt(tablaProveedor.getValueAt(fila, 0).toString());
+        Proveedor proveedor = proveedorImp.ConsultarProveedor(id);
+        
+        JtextNombre.setText(proveedor.getNombre());
+        JtextApp1.setText(proveedor.getApellido_paterno());
+        JtextApm.setText(proveedor.getApellido_materno());
+        JtextEmpresa.setText(proveedor.getEmpresa());
+        JtextTel.setText(proveedor.getTelefono());
+        jTextDireccion.setText(proveedor.getDireccion());
+        JtextCorreo.setText(proveedor.getCorreo());
+        String[] fecha = new String[3];
+        fecha = proveedor.getFecha_registro().toString().split("-");
+        jComboDia.setSelectedItem(fecha[2]);
+        jComboMes.setSelectedItem(fecha[1]);
+    }//GEN-LAST:event_tablaProveedorMouseClicked
 
     /**
      * @param args the command line arguments
@@ -70,5 +466,32 @@ public class ProveedorFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField JtextApm;
+    private javax.swing.JTextField JtextApp1;
+    private javax.swing.JTextField JtextCorreo;
+    private javax.swing.JTextField JtextEmpresa;
+    private javax.swing.JTextField JtextNombre;
+    private javax.swing.JTextField JtextTel;
+    private javax.swing.JButton jBtnEliminar;
+    private javax.swing.JButton jBtnGuardar;
+    private javax.swing.JButton jBtnLimpiar;
+    private javax.swing.JButton jBtnModificar;
+    private javax.swing.JComboBox<String> jComboAnios;
+    private javax.swing.JComboBox<String> jComboDia;
+    private javax.swing.JComboBox<String> jComboMes;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTextArea jTextDireccion;
+    private javax.swing.JTable tablaProveedor;
     // End of variables declaration//GEN-END:variables
 }
