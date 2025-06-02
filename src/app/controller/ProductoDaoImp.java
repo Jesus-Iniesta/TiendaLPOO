@@ -106,5 +106,30 @@ public class ProductoDaoImp implements ProductoDao{
         }
         return producto;
     }
+
+    @Override
+    public void construirTabla(DefaultTableModel modeloTabla) {
+        try {
+            Connection con = Conexion.getConexion();
+            String query = "select * FROM productos";
+            PreparedStatement ps = con.prepareStatement(query);
+
+            ResultSet rs = ps.executeQuery();
+
+            ResultSetMetaData rsmd = rs.getMetaData();
+            int columnas = rsmd.getColumnCount();
+
+            while (rs.next()) {
+                Object[] fila = new Object[columnas];
+                for (int i = 0; i < columnas; i++) {
+                    fila[i] = rs.getObject(i + 1);
+                }
+                modeloTabla.addRow(fila);
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error al contruir tabla. " + e);
+        }
+    }
     
 }
