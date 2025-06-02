@@ -17,10 +17,9 @@ public class PedidoProveedor {
     private String producto_solicitado;
     private int cantidad;
     private double precio_unitario;
-    private TextArea observaciones;
+    private String observaciones;
 
-    public PedidoProveedor(int id_pedido, int id_proveedor, Date fecha_pedido, Date fecha_entrega_estimada, String estado_pedido, String producto_solicitado, int cantidad, double precio_unitario, TextArea observaciones) {
-        this.id_pedido = id_pedido;
+    public PedidoProveedor( int id_proveedor, Date fecha_pedido, Date fecha_entrega_estimada, String estado_pedido, String producto_solicitado, int cantidad, double precio_unitario, String observaciones) {
         this.id_proveedor = id_proveedor;
         this.fecha_pedido = fecha_pedido;
         this.fecha_entrega_estimada = fecha_entrega_estimada;
@@ -95,11 +94,11 @@ public class PedidoProveedor {
         this.precio_unitario = precio_unitario;
     }
 
-    public TextArea getObservaciones() {
+    public String getObservaciones() {
         return observaciones;
     }
 
-    public void setObservaciones(TextArea observaciones) {
+    public void setObservaciones(String observaciones) {
         this.observaciones = observaciones;
     }
     

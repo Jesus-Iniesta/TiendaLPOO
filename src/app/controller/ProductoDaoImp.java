@@ -5,7 +5,6 @@ import app.model.Producto;
 import app.util.Conexion;
 import javax.swing.table.DefaultTableModel;
 import java.sql.*;
-import java.time.LocalDateTime;
 import javax.swing.JOptionPane;
 /**
  *
