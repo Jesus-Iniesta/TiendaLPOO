@@ -5,12 +5,9 @@
         <group>
             <file>file:/D:/repos/alfonso_tienda/Tienda_Alfonso/src/app/view/ProveedorFrame.java</file>
             <file>file:/D:/repos/alfonso_tienda/Tienda_Alfonso/src/app/controller/ClienteDaoImp.java</file>
-            <file>file:/D:/repos/alfonso_tienda/Tienda_Alfonso/src/app/view/ClientesForm.java</file>
-            <file>file:/D:/repos/alfonso_tienda/Tienda_Alfonso/src/app/controller/UsuarioDaoImp.java</file>
-            <file>file:/D:/repos/alfonso_tienda/Tienda_Alfonso/src/app/controller/UsuarioDao.java</file>
-            <file>file:/D:/repos/alfonso_tienda/Tienda_Alfonso/src/app/view/LoginFrame.java</file>
             <file>file:/D:/repos/alfonso_tienda/Tienda_Alfonso/src/app/view/RegistrateForm.java</file>
-            <file>file:/D:/repos/alfonso_tienda/Tienda_Alfonso/src/app/model/Usuario.java</file>
+            <file>file:/D:/repos/alfonso_tienda/Tienda_Alfonso/src/app/view/LoginFrame.java</file>
+            <file>file:/D:/repos/alfonso_tienda/Tienda_Alfonso/src/app/view/MenuFrame.java</file>
         </group>
     </open-files>
 </project-private>

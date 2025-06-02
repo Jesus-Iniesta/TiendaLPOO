@@ -8,7 +8,7 @@ import app.model.Producto;
 public interface ProductoDao {
     
     public abstract void RegistrarProducto(Producto producto);
-    public abstract void EliminarProducto(Producto id);
+    public abstract void EliminarProducto(int id);
     public abstract void ModificarProducto(Producto producto, int id);
-    public abstract Producto ConsultarProducto(Producto id);
+    public abstract Producto ConsultarProducto(int id);
 }

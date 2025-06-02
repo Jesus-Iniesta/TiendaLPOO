@@ -11,17 +11,40 @@ import javax.swing.text.TextAction;
 public class Producto {
     private int id_producto;
     private String nombre;
-    private TextAction descripcion;
+    private String descripcion;
     private double precio;
     private int stock = 0;
     private LocalDateTime fecha_registro;
+    private int id_proveedor;
+    private int id_categoria;
 
-    public Producto(String nombre, TextAction descripcion, double precio, LocalDateTime fecha_registro) {
+    public Producto( String nombre, String descripcion, double precio,int stock, int id_proveedor, int id_categoria) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.precio = precio;
+        this.stock = stock;
         this.fecha_registro = fecha_registro;
+        this.id_proveedor = id_proveedor;
+        this.id_categoria = id_categoria;
     }
+
+    public int getId_proveedor() {
+        return id_proveedor;
+    }
+
+    public void setId_proveedor(int id_proveedor) {
+        this.id_proveedor = id_proveedor;
+    }
+
+    public int getId_categoria() {
+        return id_categoria;
+    }
+
+    public void setId_categoria(int id_categoria) {
+        this.id_categoria = id_categoria;
+    }
+
+    
 
     public String getNombre() {
         return nombre;
@@ -31,11 +54,11 @@ public class Producto {
         this.nombre = nombre;
     }
 
-    public TextAction getDescripcion() {
+    public String getDescripcion() {
         return descripcion;
     }
 
-    public void setDescripcion(TextAction descripcion) {
+    public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
 

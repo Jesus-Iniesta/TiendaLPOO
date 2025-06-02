@@ -6,6 +6,7 @@ package app.view;
 
 import app.controller.UsuarioDaoImp;
 import app.view.RegistrateForm;
+import app.view.MenuFrame;
 /**
  *
  * @author pigim
@@ -158,6 +159,9 @@ public class LoginFrame extends javax.swing.JFrame {
         String password = new String(jPassword.getPassword());
         if (userImp.Login(JTextUser.getText(),password)) {
             System.out.println("Inicio de sesion Correcto");
+            this.setVisible(false);
+            MenuFrame menu = new MenuFrame();
+            menu.setVisible(true);
         }else{
             System.out.println("Error, Verifica contrasenia o usuario");
         }
