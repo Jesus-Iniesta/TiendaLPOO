@@ -10,6 +10,7 @@ import java.time.LocalDate;
  * @author Alfonso
  */
 public class Proveedor {
+    private int id_proveedor;
     private String nombre;
     private String apellido_paterno;
     private String apellido_materno;
@@ -29,6 +30,14 @@ public class Proveedor {
         this.correo = correo;
         this.fecha_registro = fecha_registro;
     }
+
+    public Proveedor(int id_proveedor,String nombre, String apellido_paterno, String empresa) {
+        this.nombre = nombre;
+        this.apellido_paterno = apellido_paterno;
+        this.empresa = empresa;
+        this.id_proveedor = id_proveedor;
+    }
+    
 
     public String getNombre() {
         return nombre;
@@ -92,6 +101,14 @@ public class Proveedor {
 
     public void setFecha_registro(LocalDate fecha_registro) {
         this.fecha_registro = fecha_registro;
+    }
+
+    public int getId_proveedor() {
+        return id_proveedor;
+    }
+
+    public void setId_proveedor(int id_proveedor) {
+        this.id_proveedor = id_proveedor;
     }
     
     

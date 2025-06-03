@@ -1,11 +1,15 @@
 
 package app.controller;
 
+import app.model.Categoria;
 import app.model.Producto;
+import app.model.Proveedor;
 import app.util.Conexion;
 import javax.swing.table.DefaultTableModel;
 import java.sql.*;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
+
 /**
  *
  * @author pigim
@@ -129,6 +133,93 @@ public class ProductoDaoImp implements ProductoDao{
         } catch (SQLException e) {
             System.out.println("Error al contruir tabla. " + e);
         }
+    }
+
+    @Override
+    public ArrayList<String> ProveedoresList() {
+        ArrayList<String> ListaProveedores = new ArrayList<>();
+        Proveedor proveedor = null;
+        try {
+            Connection conn = Conexion.getConexion();
+            String query = "SELECT id_proveedor, nombre, apellido_paterno, empresa FROM proveedores";
+            PreparedStatement ps = conn.prepareStatement(query);
+
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                proveedor = new Proveedor(rs.getInt("id_proveedor"),rs.getString("nombre"), rs.getString("apellido_paterno"), rs.getString("empresa"));
+                ListaProveedores.add(proveedor.getId_proveedor()+" "+proveedor.getNombre()+" " + proveedor.getApellido_paterno()+ " " + proveedor.getEmpresa());
+            }
+            rs.close();
+            ps.close();
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+        }
+        return ListaProveedores;
+    }
+
+    @Override
+    public ArrayList<String> CategoriaList() {
+        ArrayList<String> ListaCategorias = new ArrayList<>();
+        Categoria cat = null;
+        try {
+            Connection conn = Conexion.getConexion();
+            String query = "SELECT id_categoria, nombre_categoria FROM categorias";
+            PreparedStatement ps = conn.prepareStatement(query);
+            
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                cat = new Categoria(rs.getInt("id_categoria"), rs.getString("nombre_categoria"));
+                ListaCategorias.add(cat.getId_categoria()+" "+cat.getNombre_categorial());
+            }
+            rs.close();
+            ps.close();
+            
+        } catch (Exception e) {
+        }
+        return ListaCategorias;
+    }
+
+    @Override
+    public String ConsultarProveedor(int id) {
+        String item = null;
+        try {
+            Connection conn = Conexion.getConexion();
+            String query = "SELECT id_proveedor, nombre, empresa FROM proveedores WHERE id_proveedor = ?";
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setInt(1, id);
+            
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                item = rs.getInt("id_proveedor")+" "+rs.getString("nombre")+" "+rs.getString("empresa");
+            }
+            
+            rs.close();
+            ps.close();
+        } catch (Exception e) {
+            System.out.println("Error al consultar Proveedor "+e);
+        }
+        return item;
+    }
+
+    @Override
+    public String ConsultarCategoria(int id) {
+        String item = null;
+        try {
+            Connection conn = Conexion.getConexion();
+            String query = "SELECT id_categoria, nombre_categoria FROM categorias WHERE id_categoria = ?";
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setInt(1, id);
+            
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                item = rs.getInt("id_categoria")+" "+rs.getString("nombre_categoria");
+            }
+            
+            rs.close();
+            ps.close();
+        } catch (Exception e) {
+        }
+        return item;
     }
     
 }

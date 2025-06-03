@@ -12,13 +12,18 @@ public class Categoria {
     private String nombre_categorial;
     private String descripcion;
 
-    public Categoria( String nombre_categorial, String descripcion) {
+    public Categoria(int id_categoria, String nombre_categorial) {
         this.nombre_categorial = nombre_categorial;
-        this.descripcion = descripcion;
+        this.id_categoria = id_categoria;
     }
 
     public Categoria(int id_categoria, String nombre_categorial, String descripcion) {
         this.id_categoria = id_categoria;
+        this.nombre_categorial = nombre_categorial;
+        this.descripcion = descripcion;
+    }
+
+    public Categoria(String nombre_categorial, String descripcion) {
         this.nombre_categorial = nombre_categorial;
         this.descripcion = descripcion;
     }
