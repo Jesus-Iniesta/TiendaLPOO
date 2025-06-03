@@ -4,6 +4,18 @@
  */
 package app.view;
 
+import app.controller.DecimalFilter;
+import app.controller.PedidoProveedorDaoImp;
+import app.model.PedidoProveedor;
+import java.awt.Choice;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.text.AbstractDocument;
+
 /**
  *
  * @author pigim
@@ -11,12 +23,77 @@ package app.view;
 public class PedidoProveedorFrame extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(PedidoProveedorFrame.class.getName());
-
+    private PedidoProveedorDaoImp pedidoImp = new PedidoProveedorDaoImp();
     /**
      * Creates new form PedidoProveedorFrame
      */
     public PedidoProveedorFrame() {
         initComponents();
+        LlenarChoices();
+        llenarProvedores();
+        llenarProductos();
+        cargarTabla();
+        ((AbstractDocument) JTextPrecio.getDocument()).setDocumentFilter(new DecimalFilter());
+    }
+    
+    public void LlenarChoices(){
+        for (int i = 1; i < 32; i++) {
+            dia.add(i+"");
+            dia1.add(i+"");
+        }
+        for (int i = 1; i < 13; i++) {
+            mes.add(i+"");
+            mes1.add(i+"");
+        }
+        anio.add("2025");
+        anio1.add("2025");
+    }
+    
+    public void llenarProvedores(){
+        ArrayList<String> prueba = pedidoImp.ProveedoresList();
+       
+       for(int i = 0; i < prueba.size();i++){
+           jComboProovedor.addItem(prueba.get(i));
+           System.out.println("Proveedores: "+prueba.get(i));
+       }
+    }
+    
+    public void llenarProductos(){
+        ArrayList<String> productos = pedidoImp.ProductosList();
+        
+        for (int i = 0; i < productos.size(); i++) {
+            jComboProductos.addItem(productos.get(i));
+        }
+    }
+    
+    private Date obtenerFechaDesdeChoices(Choice anio, Choice mes, Choice dia) {
+        try {
+            String fechaTexto = anio.getSelectedItem() + "-"
+                    + String.format("%02d", Integer.parseInt(mes.getSelectedItem())) + "-"
+                    + String.format("%02d", Integer.parseInt(dia.getSelectedItem()));
+            SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+            return formato.parse(fechaTexto);
+        } catch (ParseException e) {
+            System.getLogger(PedidoProveedorFrame.class.getName()).log(System.Logger.Level.ERROR, "Error al parsear la fecha", e);
+            return null;
+        }
+    }
+    
+    public void limpiar(){
+        JTextPrecio.setText("");
+        jTextObservaciones.setText("");
+    }
+    
+    public void cargarTabla() {
+        DefaultTableModel modeloTabla = (DefaultTableModel) tablapedido.getModel();
+        modeloTabla.setRowCount(0);
+
+        int[] anchos = {2, 70, 70, 70, 8, 8, 80, 50, 50};
+        for (int i = 0; i < tablapedido.getColumnCount(); i++) {
+            tablapedido.getColumnModel().getColumn(i).setPreferredWidth(anchos[i]);
+        }
+        pedidoImp.construirTabla(modeloTabla);
+
     }
 
     /**
@@ -50,10 +127,14 @@ public class PedidoProveedorFrame extends javax.swing.JFrame {
         JTextPrecio = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        jTextObservaciones = new javax.swing.JTextArea();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tablapedido = new javax.swing.JTable();
+        btnGuardar = new javax.swing.JButton();
+        btnModificar = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
+        btnLimpiar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -82,23 +163,50 @@ public class PedidoProveedorFrame extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel5.setText("Estado pedido");
 
+        jComboEstadoPedido.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "pendiente", "en camino", "entregado", "cancelado" }));
+
         jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel6.setText("Cantidad");
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel7.setText("Producto Solicitado");
 
+        jComboProductos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jComboProductosMouseClicked(evt);
+            }
+        });
+        jComboProductos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboProductosActionPerformed(evt);
+            }
+        });
+
+        jsCantidad.setModel(new javax.swing.SpinnerNumberModel(1, 1, 100, 1));
+
         jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel8.setText("Precio Unitario");
+
+        JTextPrecio.setEditable(false);
+        JTextPrecio.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                JTextPrecioMouseClicked(evt);
+            }
+        });
+        JTextPrecio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JTextPrecioActionPerformed(evt);
+            }
+        });
 
         jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel9.setText("Observaciones");
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        jTextObservaciones.setColumns(20);
+        jTextObservaciones.setRows(5);
+        jScrollPane1.setViewportView(jTextObservaciones);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tablapedido.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null, null, null},
@@ -117,7 +225,12 @@ public class PedidoProveedorFrame extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane2.setViewportView(jTable1);
+        tablapedido.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablapedidoMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(tablapedido);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -125,7 +238,7 @@ public class PedidoProveedorFrame extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 969, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 932, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -134,6 +247,34 @@ public class PedidoProveedorFrame extends javax.swing.JFrame {
                 .addComponent(jScrollPane2)
                 .addContainerGap())
         );
+
+        btnGuardar.setText("Guardar");
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
+
+        btnModificar.setText("Modificar");
+        btnModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarActionPerformed(evt);
+            }
+        });
+
+        btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
+
+        btnLimpiar.setText("Limpiar");
+        btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimpiarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -147,6 +288,7 @@ public class PedidoProveedorFrame extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                         .addGap(21, 21, 21)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnLimpiar)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel4)
@@ -173,19 +315,22 @@ public class PedidoProveedorFrame extends javax.swing.JFrame {
                                         .addGap(0, 0, Short.MAX_VALUE))))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel7)
-                                            .addComponent(jLabel6)
-                                            .addComponent(jLabel8)
-                                            .addComponent(jLabel9))
-                                        .addGap(18, 18, 18)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jsCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jComboProductos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(JTextPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 0, Short.MAX_VALUE)))))
+                                    .addComponent(jLabel7)
+                                    .addComponent(jLabel6)
+                                    .addComponent(jLabel8)
+                                    .addComponent(jLabel9))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jsCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jComboProductos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(JTextPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(btnGuardar)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnModificar)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnEliminar)))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(anio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -241,7 +386,14 @@ public class PedidoProveedorFrame extends javax.swing.JFrame {
                         .addComponent(jLabel9)
                         .addGap(18, 18, 18)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 96, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnGuardar)
+                            .addComponent(btnModificar)
+                            .addComponent(btnEliminar))
+                        .addGap(26, 26, 26)
+                        .addComponent(btnLimpiar)
+                        .addGap(0, 25, Short.MAX_VALUE))
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -263,6 +415,135 @@ public class PedidoProveedorFrame extends javax.swing.JFrame {
     private void jComboProovedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboProovedorActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboProovedorActionPerformed
+
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        if (!jTextObservaciones.getText().isEmpty() && !JTextPrecio.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Guardando...");
+            //Obtener solamente Id del comboBoxProveedores
+            String proveedor = jComboProovedor.getSelectedItem().toString();
+            String[] id_proveedor = proveedor.split(" ");
+            // Obtener fechas con función
+            Date fecha_pedido = obtenerFechaDesdeChoices(anio, mes, dia);
+            Date fecha_entrega_estimada = obtenerFechaDesdeChoices(anio1, mes1, dia1);
+            String productos = jComboProductos.getSelectedItem().toString();
+            String[] id_producto = productos.split(" ");
+            
+            PedidoProveedor pedido = new PedidoProveedor(Integer.parseInt(id_proveedor[0]), 
+                    fecha_pedido, 
+                    fecha_entrega_estimada, 
+                    jComboEstadoPedido.getSelectedItem().toString(),
+                    jComboProductos.getSelectedItem().toString(),
+                    (int) jsCantidad.getValue(),
+                    pedidoImp.consultarPrecio(Integer.parseInt(id_producto[0])),
+                    jTextObservaciones.getText());
+            
+            pedidoImp.GuardarPedido(pedido);
+            cargarTabla();
+            limpiar();
+        } else {
+            JOptionPane.showMessageDialog(null, "Llena todos los campos");
+        }
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+        
+        if (!jTextObservaciones.getText().isEmpty() && !JTextPrecio.getText().isEmpty()) {
+            int fila = tablapedido.getSelectedRow();
+            int id = Integer.parseInt(tablapedido.getValueAt(fila, 0).toString());
+            //Obtener solamente Id del comboBoxProveedores
+            String proveedor = jComboProovedor.getSelectedItem().toString();
+            String[] id_proveedor = proveedor.split(" ");
+            
+            String productos = jComboProductos.getSelectedItem().toString();
+            String[] id_producto = productos.split(" ");
+            
+            // Obtener fechas con función
+            Date fecha_pedido = obtenerFechaDesdeChoices(anio, mes, dia);
+            Date fecha_entrega_estimada = obtenerFechaDesdeChoices(anio1, mes1, dia1);
+            
+            PedidoProveedor pedido = new PedidoProveedor(Integer.parseInt(id_proveedor[0]), 
+                    fecha_pedido, 
+                    fecha_entrega_estimada, 
+                    jComboEstadoPedido.getSelectedItem().toString(),
+                    jComboProductos.getSelectedItem().toString(),
+                    (int) jsCantidad.getValue(),
+                    pedidoImp.consultarPrecio(Integer.parseInt(id_producto[0])),
+                    jTextObservaciones.getText());
+            
+            pedidoImp.ModificarPedido(pedido, id);
+            cargarTabla();
+            limpiar();
+        } else {
+            JOptionPane.showMessageDialog(null, "Llena todos los campos");
+        }
+    }//GEN-LAST:event_btnModificarActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        if (!tablapedido.getRowSelectionAllowed()) {
+            int fila = tablapedido.getSelectedRow();
+            int id = Integer.parseInt(tablapedido.getValueAt(fila, 0).toString());
+            pedidoImp.EliminarPedido(id);
+            cargarTabla();
+            limpiar();
+        } else {
+            JOptionPane.showMessageDialog(null, "Selecciona una fila en la tabla para eliminar");
+        }
+
+        
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
+        limpiar();
+    }//GEN-LAST:event_btnLimpiarActionPerformed
+
+    private void jComboProductosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jComboProductosMouseClicked
+        
+    }//GEN-LAST:event_jComboProductosMouseClicked
+
+    private void JTextPrecioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JTextPrecioActionPerformed
+        
+    }//GEN-LAST:event_JTextPrecioActionPerformed
+
+    private void JTextPrecioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JTextPrecioMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_JTextPrecioMouseClicked
+
+    private void jComboProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboProductosActionPerformed
+        String productos = jComboProductos.getSelectedItem().toString();
+        String[] id_producto = productos.split(" ");
+        JTextPrecio.setText(pedidoImp.consultarPrecio(Integer.parseInt(id_producto[0]))+"");
+    }//GEN-LAST:event_jComboProductosActionPerformed
+
+    private void tablapedidoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablapedidoMouseClicked
+        int fila = tablapedido.getSelectedRow();
+        int id = Integer.parseInt(tablapedido.getValueAt(fila, 0).toString());
+        PedidoProveedor pedido = pedidoImp.ConsultarPedido(id);
+        
+        jComboProovedor.setSelectedItem(pedidoImp.consultarProveedor(pedido.getId_proveedor()));
+        jComboProductos.setSelectedItem(pedido.getProducto_solicitado());
+        
+        JTextPrecio.setText(String.valueOf(pedido.getPrecio_unitario()));
+        jsCantidad.setValue(pedido.getCantidad());
+        jComboEstadoPedido.setSelectedItem(pedido.getEstado_pedido());
+        jTextObservaciones.setText(pedido.getObservaciones());
+        
+        Date fecha_pedido = pedido.getFecha_pedido();
+        SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+        String fechaStr = formato.format(fecha_pedido);
+        String[] partes = fechaStr.split("-");
+        
+        anio.select(partes[0]);
+        mes.select(String.valueOf(Integer.parseInt(partes[1]))); // Quita el 0 inicial si lo tiene
+        dia.select(String.valueOf(Integer.parseInt(partes[2])));
+        
+        Date fecha_entrega = pedido.getFecha_entrega_estimada();
+        String fechaStr2 = formato.format(fecha_entrega);
+        String[] partes2 = fechaStr2.split("-");
+        
+        anio1.select(partes2[0]);
+        mes1.select(String.valueOf(Integer.parseInt(partes2[1]))); // Quita el 0 inicial si lo tiene
+        dia1.select(String.valueOf(Integer.parseInt(partes2[2])));
+    }//GEN-LAST:event_tablapedidoMouseClicked
 
     /**
      * @param args the command line arguments
@@ -293,6 +574,10 @@ public class PedidoProveedorFrame extends javax.swing.JFrame {
     private javax.swing.JTextField JTextPrecio;
     private java.awt.Choice anio;
     private java.awt.Choice anio1;
+    private javax.swing.JButton btnEliminar;
+    private javax.swing.JButton btnGuardar;
+    private javax.swing.JButton btnLimpiar;
+    private javax.swing.JButton btnModificar;
     private java.awt.Choice dia;
     private java.awt.Choice dia1;
     private javax.swing.JComboBox<String> jComboEstadoPedido;
@@ -311,10 +596,10 @@ public class PedidoProveedorFrame extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JTextArea jTextObservaciones;
     private javax.swing.JSpinner jsCantidad;
     private java.awt.Choice mes;
     private java.awt.Choice mes1;
+    private javax.swing.JTable tablapedido;
     // End of variables declaration//GEN-END:variables
 }

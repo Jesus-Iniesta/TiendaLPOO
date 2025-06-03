@@ -28,6 +28,13 @@ public class Producto {
         this.id_categoria = id_categoria;
     }
 
+    public Producto(int id_producto, String nombre) {
+        this.id_producto = id_producto;
+        this.nombre = nombre;
+    }
+    
+    
+    
     public int getId_proveedor() {
         return id_proveedor;
     }

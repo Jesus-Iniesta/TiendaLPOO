@@ -6,7 +6,6 @@ package app.view;
 
 import java.util.ArrayList;
 import app.controller.ProductoDaoImp;
-import javax.swing.SpinnerNumberModel;
 import app.controller.DecimalFilter;
 import javax.swing.text.AbstractDocument;
 import app.model.Producto;
