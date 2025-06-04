@@ -2,10 +2,12 @@
 package app.controller;
 
 import app.model.Factura;
+import app.model.Ventas;
 import javax.swing.table.DefaultTableModel;
 import java.sql.*;
 import javax.swing.JOptionPane;
 import app.util.Conexion;
+import java.util.ArrayList;
 
 /**
  *
@@ -17,7 +19,7 @@ public class FacturaDaoImp implements FacturaDao{
     public void GuardarFactura(Factura factura) {
         try {
             Connection conn = Conexion.getConexion();
-            String query = "INSERT INTO factuas (id_venta, nombre, apellido_paterno, apellido_materno, rfc, razon_social, direccion_fiscal, total) "
+            String query = "INSERT INTO facturas (id_venta, nombre, apellido_paterno, apellido_materno, rfc, razon_social, direccion_fiscal, total) "
                     + "VALUES (?,?,?,?,?,?,?,?)";
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setInt(1, factura.getId_venta());
@@ -35,6 +37,7 @@ public class FacturaDaoImp implements FacturaDao{
             JOptionPane.showMessageDialog(null, "Factura guardada con exito");
             
         } catch (Exception e) {
+            System.out.println("Error:" +e);
         }
     }
 
@@ -93,10 +96,13 @@ public class FacturaDaoImp implements FacturaDao{
             Connection conn = Conexion.getConexion();
             String query = "SELECT * FROM facturas WHERE id_factura = ?";
             PreparedStatement ps = conn.prepareStatement(query);
+            ps.setInt(1, id);
             
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
-                fac = new Factura(rs.getInt("id_venta"),
+                
+                fac = new Factura(rs.getInt("id_factura"),
+                        rs.getInt("id_venta"),
                         rs.getString("nombre"),
                         rs.getString("apellido_paterno"),
                         rs.getString("apellido_materno"),
@@ -136,5 +142,48 @@ public class FacturaDaoImp implements FacturaDao{
             System.out.println("Error al contruir tabla. " + e);
         }
     }
+
+    @Override
+    public ArrayList<String> Ventas() {
+        ArrayList<String> ListaProveedores = new ArrayList<>();
+        Ventas ventas = null;
+        try {
+            Connection conn = Conexion.getConexion();
+            String query = "SELECT id_venta FROM ventas";
+            PreparedStatement ps = conn.prepareStatement(query);
+
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                ventas = new Ventas(rs.getInt("id_venta"));
+                ListaProveedores.add(ventas.getId_venta()+"");
+            }
+            rs.close();
+            ps.close();
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+        }
+        return ListaProveedores;
+    }
+
+    @Override
+    public Double regresarTotal(int idVenta) {
+        Double total = 0.0;
+        try {
+            Connection conn = Conexion.getConexion();
+            String query = "SELECT total FROM VENTAS WHERE id_venta = ?";
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setInt(1, idVenta);
+            
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                total = rs.getDouble("total");
+            }
+            rs.close();
+            ps.close();
+        } catch (Exception e) {
+        }
+        return total;
+    }
+    
     
 }

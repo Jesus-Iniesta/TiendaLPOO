@@ -41,6 +41,20 @@ public class Factura {
         this.direccion_fiscal = direccion_fiscal;
         this.total = total;
     }
+
+    public Factura(int id_factura, int id_venta, String nombre, String apellido_paterno, String apellido_materno, String rfc, String razon_social, String direccion_fiscal, double total) {
+        this.id_factura = id_factura;
+        this.id_venta = id_venta;
+        this.nombre = nombre;
+        this.apellido_paterno = apellido_paterno;
+        this.apellido_materno = apellido_materno;
+        this.rfc = rfc;
+        this.razon_social = razon_social;
+        this.direccion_fiscal = direccion_fiscal;
+        this.total = total;
+    }
+    
+    
     
 
     public int getId_factura() {

@@ -28,6 +28,10 @@ public class Ventas {
     
     //consultar ventas
 
+    public Ventas(int id_venta) {
+        this.id_venta = id_venta;
+    }
+
     
    
 
