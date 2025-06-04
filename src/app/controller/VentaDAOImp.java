@@ -1,60 +1,142 @@
-
 package app.controller;
 
-
+import app.model.Cliente;
+import app.model.DetalleVenta;
 import app.model.Ventas;
 import javax.swing.table.DefaultTableModel;
 import java.sql.*;
 import javax.swing.JOptionPane;
 import app.util.Conexion;
+import java.util.ArrayList;
 
 /**
  *
  * @author Alfonso
  */
-public class VentaDAOImp implements VentaDao{
+public class VentaDAOImp implements VentaDao {
 
     @Override
-    public void GuardarVenta(Ventas venta) {
-        
+    public void GuardarVenta(Ventas venta, DetalleVenta detalle) {
+
+        Connection conn = null;
+        PreparedStatement psVenta = null;
+        PreparedStatement psDetalle = null;
+        ResultSet generatedKeys = null;
         try {
-            Connection conn = Conexion.getConexion();
-            if(venta.getId_cliente() > 0){
-                String query = "INSERT INTO ventas (id_cliente, total) VALUES (?, ?)";
-                PreparedStatement ps = conn.prepareStatement(query);
-                ps.setInt(1, venta.getId_cliente());
-                ps.setDouble(2, venta.getTotal());
-                
-                
-                JOptionPane.showMessageDialog(null, "Venta con exito");
-                ps.executeUpdate();
-                ps.close();
-            }else{
-                String query = "INSERT INTO ventas (total) VALUES (?)";
-                PreparedStatement ps = conn.prepareStatement(query);
-                ps.setDouble(1, venta.getTotal());
-                
-                JOptionPane.showMessageDialog(null, "Venta con exito");
-                ps.executeUpdate();
-                ps.close();
+            conn = Conexion.getConexion();
+            conn.setAutoCommit(false); // Inicia la transacción
+
+            // 1. Insertar la venta
+            String queryVenta;
+            if (venta.getId_cliente() > 0) {
+                queryVenta = "INSERT INTO ventas (id_cliente, total) VALUES (?, ?)";
+                psVenta = conn.prepareStatement(queryVenta, Statement.RETURN_GENERATED_KEYS);
+                psVenta.setInt(1, venta.getId_cliente());
+                psVenta.setDouble(2, venta.getTotal());
+            } else {
+                queryVenta = "INSERT INTO ventas (total) VALUES (?)";
+                psVenta = conn.prepareStatement(queryVenta, Statement.RETURN_GENERATED_KEYS);
+                psVenta.setDouble(1, venta.getTotal());
             }
-            
+            psVenta.executeUpdate();
+
+            // 2. Obtener el id_venta generado
+            generatedKeys = psVenta.getGeneratedKeys();
+            int idVenta = 0;
+            if (generatedKeys.next()) {
+                idVenta = generatedKeys.getInt(1);
+            } else {
+                throw new SQLException("No se pudo obtener el id de la venta.");
+            }
+
+            // 3. Insertar el detalle de la venta usando el idVenta generado
+            String queryDetalle = "INSERT INTO detalle_venta (id_venta, id_producto, cantidad, precio_unitario) VALUES (?, ?, ?, ?)";
+            psDetalle = conn.prepareStatement(queryDetalle);
+            psDetalle.setInt(1, idVenta);
+            psDetalle.setInt(2, detalle.getId_producto());
+            psDetalle.setInt(3, detalle.getCantidad());
+            psDetalle.setDouble(4, detalle.getPrecio_unitario());
+            psDetalle.executeUpdate();
+
+            conn.commit(); // Confirma la transacción
+            JOptionPane.showMessageDialog(null, "Venta y detalle guardados con éxito");
         } catch (Exception e) {
+            try {
+                if (conn != null) {
+                    conn.rollback();
+                }
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            JOptionPane.showMessageDialog(null, "Error al guardar venta y detalle: ");
+            System.out.println("error venta/detalle> " + e);
+        } finally {
+            try {
+                if (generatedKeys != null) {
+                    generatedKeys.close();
+                }
+                if (psDetalle != null) {
+                    psDetalle.close();
+                }
+                if (psVenta != null) {
+                    psVenta.close();
+                }
+                if (conn != null) {
+                    conn.setAutoCommit(true);
+                }
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
         }
     }
 
     @Override
-    public void EliminarVenta(int id) {
+    public void EliminarVenta(int idVenta) {
+        Connection conn = null;
+        PreparedStatement psDetalle = null;
+        PreparedStatement psVenta = null;
         try {
-            Connection conn = Conexion.getConexion();
-            String query = "DELETE FROM ventas WHERE id_venta = ?";
-            PreparedStatement ps = conn.prepareStatement(query);
-            ps.setInt(1, id);
-            
-            
-            ps.executeUpdate();
-            JOptionPane.showMessageDialog(null, "Venta eliminada con exito");
+            conn = Conexion.getConexion();
+            conn.setAutoCommit(false); // Transacción
+
+            // 1. Eliminar detalles de la venta
+            String queryDetalle = "DELETE FROM detalle_venta WHERE id_venta = ?";
+            psDetalle = conn.prepareStatement(queryDetalle);
+            psDetalle.setInt(1, idVenta);
+            psDetalle.executeUpdate();
+
+            // 2. Eliminar la venta
+            String queryVenta = "DELETE FROM ventas WHERE id_venta = ?";
+            psVenta = conn.prepareStatement(queryVenta);
+            psVenta.setInt(1, idVenta);
+            psVenta.executeUpdate();
+
+            conn.commit();
+            JOptionPane.showMessageDialog(null, "Venta y detalle(s) eliminados con éxito");
         } catch (Exception e) {
+            try {
+                if (conn != null) {
+                    conn.rollback();
+                }
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            JOptionPane.showMessageDialog(null, "Error al eliminar la venta: ");
+            System.out.println("error eliminar venta " + e);
+        } finally {
+            try {
+                if (psDetalle != null) {
+                    psDetalle.close();
+                }
+                if (psVenta != null) {
+                    psVenta.close();
+                }
+                if (conn != null) {
+                    conn.setAutoCommit(true);
+                }
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
         }
     }
 
@@ -66,17 +148,16 @@ public class VentaDAOImp implements VentaDao{
             String query = "SELECT * FROM ventas WHERE id_venta = ?";
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setInt(1, id);
-            
+
             ResultSet rs = ps.executeQuery();
-            while(rs.next()){
-                
-               
+            while (rs.next()) {
+
                 venta = new Ventas(
-                    rs.getInt("id_cliente"),
-                    rs.getDouble("total")
+                        rs.getInt("id_cliente"),
+                        rs.getDouble("total")
                 );
             }
-            
+
             rs.close();
             ps.close();
         } catch (Exception e) {
@@ -85,23 +166,55 @@ public class VentaDAOImp implements VentaDao{
     }
 
     @Override
-    public void ModificarVentas(Ventas venta, int id) {
+    public void ModificarVentas(Ventas venta, DetalleVenta detalle, int idVenta, int idDetalle) {
+        Connection conn = null;
+        PreparedStatement psVenta = null;
+        PreparedStatement psDetalle = null;
         try {
-            Connection conn = Conexion.getConexion();
-            String query = "UPDATE ventas SET "
-                    + "id_proveedor = ?, "
-                    + "total = ? "
-                    + "WHERE id_venta = ?";
-            PreparedStatement ps = conn.prepareStatement(query);
-            ps.setInt(1, venta.getId_cliente());
-            ps.setDouble(2, venta.getTotal());
-            ps.setInt(3, id);
-            
-            ps.executeUpdate();
-            ps.close();
-            
-            JOptionPane.showMessageDialog(null, "Venta Modificada con exito");
+            conn = Conexion.getConexion();
+            conn.setAutoCommit(false); // inicia transacción
+
+            // 1. Modificar la venta
+            String queryVenta = "UPDATE ventas SET id_cliente = ?, total = ? WHERE id_venta = ?";
+            psVenta = conn.prepareStatement(queryVenta);
+            psVenta.setInt(1, venta.getId_cliente());
+            psVenta.setDouble(2, venta.getTotal());
+            psVenta.setInt(3, idVenta);
+            psVenta.executeUpdate();
+
+            // 2. Modificar el detalle de la venta
+            String queryDetalle = "UPDATE detalle_venta SET id_producto = ?, cantidad = ?, precio_unitario = ? WHERE id_detalle = ?";
+            psDetalle = conn.prepareStatement(queryDetalle);
+            psDetalle.setInt(1, detalle.getId_producto());
+            psDetalle.setInt(2, detalle.getCantidad());
+            psDetalle.setDouble(3, detalle.getPrecio_unitario());
+            psDetalle.setInt(4, idDetalle);
+            psDetalle.executeUpdate();
+
+            conn.commit(); // confirma cambios
+            JOptionPane.showMessageDialog(null, "Venta y detalle modificados con éxito");
         } catch (Exception e) {
+            try {
+                if (conn != null) {
+                    conn.rollback();
+                }
+            } catch (Exception ex) {
+            }
+            JOptionPane.showMessageDialog(null, "Error al modificar venta/detalle: " + e.getMessage());
+            System.out.println("Error modificar venta/detalle: " + e);
+        } finally {
+            try {
+                if (psDetalle != null) {
+                    psDetalle.close();
+                }
+                if (psVenta != null) {
+                    psVenta.close();
+                }
+                if (conn != null) {
+                    conn.setAutoCommit(true);
+                }
+            } catch (Exception ex) {
+            }
         }
     }
 
@@ -137,9 +250,9 @@ public class VentaDAOImp implements VentaDao{
             Connection conn = Conexion.getConexion();
             String query = "SELECT LAST_INSERT_ID() AS id_venta";
             PreparedStatement ps = conn.prepareStatement(query);
-            
+
             ResultSet rs = ps.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 id_venta = rs.getInt("id_venta");
             }
             rs.close();
@@ -148,5 +261,26 @@ public class VentaDAOImp implements VentaDao{
         return id_venta;
     }
 
-    
+    @Override
+    public ArrayList<String> ListaClientes() {
+        ArrayList<String> ListaClientes = new ArrayList<>();
+        Cliente cliente = null;
+        try {
+            Connection conn = Conexion.getConexion();
+            String query = "SELECT id_cliente, nombre, apellido_paterno FROM clientes";
+            PreparedStatement ps = conn.prepareStatement(query);
+
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                cliente = new Cliente(rs.getString("nombre"), rs.getString("apellido_paterno"), rs.getInt("id_cliente"));
+                ListaClientes.add(cliente.getId_cliente() + " " + cliente.getNombre() + " " + cliente.getApellido_paterno());
+            }
+            rs.close();
+            ps.close();
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+        }
+        return ListaClientes;
+    }
+
 }

@@ -13,6 +13,12 @@ public class DetalleVenta {
     private double precio_unitario;
     private double subtotal;
 
+    public DetalleVenta(int id_producto, int cantidad, double precio_unitario) {;
+        this.id_producto = id_producto;
+        this.cantidad = cantidad;
+        this.precio_unitario = precio_unitario;
+    }
+
     public DetalleVenta(int id_venta, int id_producto, int cantidad, double precio_unitario, double subtotal) {
         this.id_venta = id_venta;
         this.id_producto = id_producto;
@@ -20,6 +26,7 @@ public class DetalleVenta {
         this.precio_unitario = precio_unitario;
         this.subtotal = subtotal;
     }
+    
 
     public int getId_detalle() {
         return id_detalle;

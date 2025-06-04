@@ -14,6 +14,7 @@ public class Cliente {
     private String ciudad;
     private String cp;
     private String rfc;
+    private int id_cliente;
 
     public Cliente(String nombre, String apellido_paterno, String telefono, String calle, String colonia, String ciudad, String cp, String rfc) {
         this.nombre = nombre;
@@ -25,6 +26,24 @@ public class Cliente {
         this.cp = cp;
         this.rfc = rfc;
     }
+
+    public Cliente(String nombre, String apellido_paterno, int id_cliente) {
+        this.nombre = nombre;
+        this.apellido_paterno = apellido_paterno;
+        this.id_cliente = id_cliente;
+    }
+
+    
+    
+    
+    public int getId_cliente() {
+        return id_cliente;
+    }
+
+    public void setId_cliente(int id_cliente) {
+        this.id_cliente = id_cliente;
+    }
+    
     
     
 
