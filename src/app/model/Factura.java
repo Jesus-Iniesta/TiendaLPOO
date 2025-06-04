@@ -14,11 +14,11 @@ public class Factura {
     private String apellido_paterno, apellido_materno;
     private String rfc;
     private String razon_social;
-    private TextAction direccion_fiscal;
+    private String direccion_fiscal;
     private LocalDateTime fecha_emision;
     private double total; 
 
-    public Factura(int id_factura, int id_venta, String nombre, String apellido_paterno, String apellido_materno, String rfc, String razon_social, TextAction direccion_fiscal, LocalDateTime fecha_emision, double total) {
+    public Factura(int id_factura, int id_venta, String nombre, String apellido_paterno, String apellido_materno, String rfc, String razon_social, String direccion_fiscal, LocalDateTime fecha_emision, double total) {
         this.id_factura = id_factura;
         this.id_venta = id_venta;
         this.nombre = nombre;
@@ -30,6 +30,18 @@ public class Factura {
         this.fecha_emision = fecha_emision;
         this.total = total;
     }
+
+    public Factura(int id_venta, String nombre, String apellido_paterno, String apellido_materno, String rfc, String razon_social, String direccion_fiscal, double total) {
+        this.id_venta = id_venta;
+        this.nombre = nombre;
+        this.apellido_paterno = apellido_paterno;
+        this.apellido_materno = apellido_materno;
+        this.rfc = rfc;
+        this.razon_social = razon_social;
+        this.direccion_fiscal = direccion_fiscal;
+        this.total = total;
+    }
+    
 
     public int getId_factura() {
         return id_factura;
@@ -87,11 +99,11 @@ public class Factura {
         this.razon_social = razon_social;
     }
 
-    public TextAction getDireccion_fiscal() {
+    public String getDireccion_fiscal() {
         return direccion_fiscal;
     }
 
-    public void setDireccion_fiscal(TextAction direccion_fiscal) {
+    public void setDireccion_fiscal(String direccion_fiscal) {
         this.direccion_fiscal = direccion_fiscal;
     }
 
