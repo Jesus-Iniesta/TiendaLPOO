@@ -7,6 +7,7 @@ package app.view;
 import javax.swing.table.DefaultTableModel;
 import app.controller.ClienteDaoImp;
 import app.model.Cliente;
+import javax.swing.JOptionPane;
 /**
  *
  * @author pigim
@@ -358,44 +359,83 @@ public class ClientesForm extends javax.swing.JFrame {
     }//GEN-LAST:event_JtextRfcActionPerformed
 
     private void jBtnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnGuardarActionPerformed
+        if (JtextNombre.getText().isEmpty()
+                || JtextApp.getText().isEmpty()
+                || JtextTel.getText().isEmpty()
+                || JtextCalle.getText().isEmpty()
+                || JtextColonia1.getText().isEmpty()
+                || JtextCiudad.getText().isEmpty()
+                || JtextCP.getText().isEmpty()
+                || JtextRfc.getText().isEmpty()) {
 
-        Cliente cl = new Cliente(JtextNombre.getText(),
-                JtextApp.getText(),
-                JtextTel.getText(),
-                JtextCalle.getText(),
-                JtextColonia1.getText(),
-                JtextCiudad.getText(),
-                JtextCP.getText(),
-                JtextRfc.getText());
-        
-        clienteImp.RegistroCliente(cl);
-        cargarTabla();
-        limpiar();
+            JOptionPane.showMessageDialog(null, "Se requieren todos los campos");
+
+        } else {
+            Cliente cl = new Cliente(JtextNombre.getText(),
+                    JtextApp.getText(),
+                    JtextTel.getText(),
+                    JtextCalle.getText(),
+                    JtextColonia1.getText(),
+                    JtextCiudad.getText(),
+                    JtextCP.getText(),
+                    JtextRfc.getText());
+
+            clienteImp.RegistroCliente(cl);
+            cargarTabla();
+            limpiar();
+        }
     }//GEN-LAST:event_jBtnGuardarActionPerformed
 
     private void jBtnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnEliminarActionPerformed
-        int fila = tablacliente.getSelectedRow();
-        int id = Integer.parseInt(tablacliente.getValueAt(fila, 0).toString());
-        clienteImp.EliminarCliente(id);
-        cargarTabla();
-        limpiar();
+        if (JtextNombre.getText().isEmpty()
+                || JtextApp.getText().isEmpty()
+                || JtextTel.getText().isEmpty()
+                || JtextCalle.getText().isEmpty()
+                || JtextColonia1.getText().isEmpty()
+                || JtextCiudad.getText().isEmpty()
+                || JtextCP.getText().isEmpty()
+                || JtextRfc.getText().isEmpty()) {
+
+            JOptionPane.showMessageDialog(null, "Se requieren todos los campos");
+
+        } else {
+            int fila = tablacliente.getSelectedRow();
+            int id = Integer.parseInt(tablacliente.getValueAt(fila, 0).toString());
+            clienteImp.EliminarCliente(id);
+            cargarTabla();
+            limpiar();
+        }
     }//GEN-LAST:event_jBtnEliminarActionPerformed
 
     private void jBtnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnModificarActionPerformed
-        int fila = tablacliente.getSelectedRow();
-        int id = Integer.parseInt(tablacliente.getValueAt(fila, 0).toString());
         
-        Cliente cl = new Cliente(JtextNombre.getText(),
-                JtextApp.getText(),
-                JtextTel.getText(),
-                JtextCalle.getText(),
-                JtextColonia1.getText(),
-                JtextCiudad.getText(),
-                JtextCP.getText(),
-                JtextRfc.getText());
-        clienteImp.ModificarCliente(cl, id);
-        cargarTabla();
-        limpiar();
+        if (JtextNombre.getText().isEmpty()
+                || JtextApp.getText().isEmpty()
+                || JtextTel.getText().isEmpty()
+                || JtextCalle.getText().isEmpty()
+                || JtextColonia1.getText().isEmpty()
+                || JtextCiudad.getText().isEmpty()
+                || JtextCP.getText().isEmpty()
+                || JtextRfc.getText().isEmpty()) {
+
+            JOptionPane.showMessageDialog(null, "Se requieren todos los campos");
+
+        } else {
+            int fila = tablacliente.getSelectedRow();
+            int id = Integer.parseInt(tablacliente.getValueAt(fila, 0).toString());
+
+            Cliente cl = new Cliente(JtextNombre.getText(),
+                    JtextApp.getText(),
+                    JtextTel.getText(),
+                    JtextCalle.getText(),
+                    JtextColonia1.getText(),
+                    JtextCiudad.getText(),
+                    JtextCP.getText(),
+                    JtextRfc.getText());
+            clienteImp.ModificarCliente(cl, id);
+            cargarTabla();
+            limpiar();
+        }
     }//GEN-LAST:event_jBtnModificarActionPerformed
 
     private void jBtnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnLimpiarActionPerformed

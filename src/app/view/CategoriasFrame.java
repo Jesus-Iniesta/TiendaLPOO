@@ -6,6 +6,7 @@ package app.view;
 
 import app.model.Categoria;
 import app.controller.CategoriaDaoImp;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 /**
  *
@@ -199,15 +200,31 @@ public class CategoriasFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void JBtnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBtnGuardarActionPerformed
-        Categoria cat = new Categoria((String)JComboCat.getSelectedItem(), JTextDescripcion.getText());
-        categoriaImp.GuardarCategoria(cat);
-        cargarTabla();
+        if (JComboCat.getSelectedItem() == null
+                || ((String) JComboCat.getSelectedItem()).trim().isEmpty()
+                || JTextDescripcion.getText().trim().isEmpty()) {
+
+            JOptionPane.showMessageDialog(null, "Se requieren todos los campos");
+
+        } else {
+            Categoria cat = new Categoria((String) JComboCat.getSelectedItem(), JTextDescripcion.getText());
+            categoriaImp.GuardarCategoria(cat);
+            cargarTabla();
+        }
     }//GEN-LAST:event_JBtnGuardarActionPerformed
 
     private void JBtnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBtnEliminarActionPerformed
-        int fila = tablaCat.getSelectedRow();
-        int id = Integer.parseInt(tablaCat.getValueAt(fila, 0).toString());
-        categoriaImp.EliminarCat(id);
+        if (JComboCat.getSelectedItem() == null
+                || ((String) JComboCat.getSelectedItem()).trim().isEmpty()
+                || JTextDescripcion.getText().trim().isEmpty()) {
+
+            JOptionPane.showMessageDialog(null, "Se requieren todos los campos");
+
+        } else {
+            int fila = tablaCat.getSelectedRow();
+            int id = Integer.parseInt(tablaCat.getValueAt(fila, 0).toString());
+            categoriaImp.EliminarCat(id);
+        }
     }//GEN-LAST:event_JBtnEliminarActionPerformed
 
     private void JBtnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBtnLimpiarActionPerformed
@@ -224,12 +241,19 @@ public class CategoriasFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_tablaCatMouseClicked
 
     private void JBtnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBtnModificarActionPerformed
+        if (JComboCat.getSelectedItem() == null
+                || ((String) JComboCat.getSelectedItem()).trim().isEmpty()
+                || JTextDescripcion.getText().trim().isEmpty()) {
 
-        int fila = tablaCat.getSelectedRow();
-        int id = Integer.parseInt(tablaCat.getValueAt(fila, 0).toString());
-        
-        Categoria cat = new Categoria((String)JComboCat.getSelectedItem(), JTextDescripcion.getText());
-        categoriaImp.ModificarCategoria(cat, id);
+            JOptionPane.showMessageDialog(null, "Se requieren todos los campos");
+
+        } else {
+            int fila = tablaCat.getSelectedRow();
+            int id = Integer.parseInt(tablaCat.getValueAt(fila, 0).toString());
+
+            Categoria cat = new Categoria((String) JComboCat.getSelectedItem(), JTextDescripcion.getText());
+            categoriaImp.ModificarCategoria(cat, id);
+        }
     }//GEN-LAST:event_JBtnModificarActionPerformed
 
     /**

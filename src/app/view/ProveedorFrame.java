@@ -7,6 +7,7 @@ package app.view;
 import app.model.Proveedor;
 import java.time.LocalDate;
 import app.controller.ProveedorDaoImp;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 /**
  *
@@ -375,30 +376,66 @@ public class ProveedorFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_JtextCorreoActionPerformed
 
     private void jBtnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnEliminarActionPerformed
-        int fila = tablaProveedor.getSelectedRow();
-        int id = Integer.parseInt(tablaProveedor.getValueAt(fila, 0).toString());
-        proveedorImp.EliminarProveedor(id);
-        cargarTabla();
-        limpiar();
+        if (JtextNombre.getText().trim().isEmpty()
+                || JtextApp1.getText().trim().isEmpty()
+                || JtextApm.getText().trim().isEmpty()
+                || JtextEmpresa.getText().trim().isEmpty()
+                || JtextTel.getText().trim().isEmpty()
+                || jTextDireccion.getText().trim().isEmpty()
+                || JtextCorreo.getText().trim().isEmpty()
+                || jComboAnios.getSelectedItem() == null
+                || jComboMes.getSelectedItem() == null
+                || jComboDia.getSelectedItem() == null
+                || jComboAnios.getSelectedItem().toString().trim().isEmpty()
+                || jComboMes.getSelectedItem().toString().trim().isEmpty()
+                || jComboDia.getSelectedItem().toString().trim().isEmpty()) {
+
+            JOptionPane.showMessageDialog(null, "Se requieren todos los campos");
+
+        } else {
+            int fila = tablaProveedor.getSelectedRow();
+            int id = Integer.parseInt(tablaProveedor.getValueAt(fila, 0).toString());
+            proveedorImp.EliminarProveedor(id);
+            cargarTabla();
+            limpiar();
+        }
     }//GEN-LAST:event_jBtnEliminarActionPerformed
 
     private void jBtnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnModificarActionPerformed
-        int fila = tablaProveedor.getSelectedRow();
-        int id = Integer.parseInt(tablaProveedor.getValueAt(fila, 0).toString());
-        LocalDate fecha = LocalDate.of(Integer.parseInt(jComboAnios.getSelectedItem().toString()), Integer.parseInt(jComboMes.getSelectedItem().toString()), Integer.parseInt(jComboDia.getSelectedItem().toString()));
+        if (JtextNombre.getText().trim().isEmpty()
+                || JtextApp1.getText().trim().isEmpty()
+                || JtextApm.getText().trim().isEmpty()
+                || JtextEmpresa.getText().trim().isEmpty()
+                || JtextTel.getText().trim().isEmpty()
+                || jTextDireccion.getText().trim().isEmpty()
+                || JtextCorreo.getText().trim().isEmpty()
+                || jComboAnios.getSelectedItem() == null
+                || jComboMes.getSelectedItem() == null
+                || jComboDia.getSelectedItem() == null
+                || jComboAnios.getSelectedItem().toString().trim().isEmpty()
+                || jComboMes.getSelectedItem().toString().trim().isEmpty()
+                || jComboDia.getSelectedItem().toString().trim().isEmpty()) {
 
-        Proveedor proveedor = new Proveedor(JtextNombre.getText(),
-                JtextApp1.getText(),
-                JtextApm.getText(),
-                JtextEmpresa.getText(),
-                JtextTel.getText(),
-                jTextDireccion.getText(),
-                JtextCorreo.getText(),
-                fecha);
-        
-        proveedorImp.ModificarProveedor(proveedor, id);
-        cargarTabla();
-        limpiar();
+            JOptionPane.showMessageDialog(null, "Se requieren todos los campos");
+
+        } else {
+            int fila = tablaProveedor.getSelectedRow();
+            int id = Integer.parseInt(tablaProveedor.getValueAt(fila, 0).toString());
+            LocalDate fecha = LocalDate.of(Integer.parseInt(jComboAnios.getSelectedItem().toString()), Integer.parseInt(jComboMes.getSelectedItem().toString()), Integer.parseInt(jComboDia.getSelectedItem().toString()));
+
+            Proveedor proveedor = new Proveedor(JtextNombre.getText(),
+                    JtextApp1.getText(),
+                    JtextApm.getText(),
+                    JtextEmpresa.getText(),
+                    JtextTel.getText(),
+                    jTextDireccion.getText(),
+                    JtextCorreo.getText(),
+                    fecha);
+
+            proveedorImp.ModificarProveedor(proveedor, id);
+            cargarTabla();
+            limpiar();
+        }
     }//GEN-LAST:event_jBtnModificarActionPerformed
 
     private void jBtnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnLimpiarActionPerformed
@@ -407,19 +444,36 @@ public class ProveedorFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jBtnLimpiarActionPerformed
 
     private void jBtnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnGuardarActionPerformed
-        
-        LocalDate fecha = LocalDate.of(Integer.parseInt(jComboAnios.getSelectedItem().toString()), Integer.parseInt(jComboMes.getSelectedItem().toString()), Integer.parseInt(jComboDia.getSelectedItem().toString()));
-        Proveedor proveedor = new Proveedor(JtextNombre.getText(),
-                JtextApp1.getText(),
-                JtextApm.getText(),
-                JtextEmpresa.getText(),
-                JtextTel.getText(),
-                jTextDireccion.getText(),
-                JtextCorreo.getText(),
-                fecha);
-        
-        proveedorImp.GuardarProveedor(proveedor);
-        cargarTabla();
+        if (JtextNombre.getText().trim().isEmpty()
+                || JtextApp1.getText().trim().isEmpty()
+                || JtextApm.getText().trim().isEmpty()
+                || JtextEmpresa.getText().trim().isEmpty()
+                || JtextTel.getText().trim().isEmpty()
+                || jTextDireccion.getText().trim().isEmpty()
+                || JtextCorreo.getText().trim().isEmpty()
+                || jComboAnios.getSelectedItem() == null
+                || jComboMes.getSelectedItem() == null
+                || jComboDia.getSelectedItem() == null
+                || jComboAnios.getSelectedItem().toString().trim().isEmpty()
+                || jComboMes.getSelectedItem().toString().trim().isEmpty()
+                || jComboDia.getSelectedItem().toString().trim().isEmpty()) {
+
+            JOptionPane.showMessageDialog(null, "Se requieren todos los campos");
+
+        } else {
+            LocalDate fecha = LocalDate.of(Integer.parseInt(jComboAnios.getSelectedItem().toString()), Integer.parseInt(jComboMes.getSelectedItem().toString()), Integer.parseInt(jComboDia.getSelectedItem().toString()));
+            Proveedor proveedor = new Proveedor(JtextNombre.getText(),
+                    JtextApp1.getText(),
+                    JtextApm.getText(),
+                    JtextEmpresa.getText(),
+                    JtextTel.getText(),
+                    jTextDireccion.getText(),
+                    JtextCorreo.getText(),
+                    fecha);
+
+            proveedorImp.GuardarProveedor(proveedor);
+            cargarTabla();
+        }
     }//GEN-LAST:event_jBtnGuardarActionPerformed
 
     private void tablaProveedorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaProveedorMouseClicked
