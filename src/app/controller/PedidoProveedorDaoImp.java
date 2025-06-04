@@ -84,6 +84,7 @@ public class PedidoProveedorDaoImp implements PedidoProveedorDao {
             ps.setInt(6, pedido.getCantidad());
             ps.setDouble(7, pedido.getPrecio_unitario());
             ps.setString(8, pedido.getObservaciones());
+            ps.setInt(9, id);
             ps.executeUpdate();
 
             ps.close();

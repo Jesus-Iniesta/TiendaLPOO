@@ -12,57 +12,11 @@ import app.util.Conexion;
  */
 public class DetalleVentaDaoImp implements DetalleVentaDao {
 
-    @Override
-    public void GuardarDetalle(DetalleVenta detalle) {
-        try {
-            Connection conn = Conexion.getConexion();
-            String query = "INSERT INTO detalle_venta (id_venta, id_producto, cantidad, precio_unitario) VALUES (?, ?, ?, ?)";
-            PreparedStatement ps = conn.prepareStatement(query);
-            ps.setInt(1, detalle.getId_venta());
-            ps.setInt(2, detalle.getId_producto());
-            ps.setInt(3, detalle.getCantidad());
-            ps.setDouble(4, detalle.getPrecio_unitario());
-            ps.executeUpdate();
+    
 
-            JOptionPane.showMessageDialog(null, "Dellates Guardados");
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error al guardar detalles, llena todos los campos");
-            System.out.println("error detalle> " + e);
-        }
-    }
+    
 
-    @Override
-    public void EliminarDetalle(int id_detalle) {
-        try {
-            Connection conn = Conexion.getConexion();
-            String query = "DELETE FROM detalle_venta WHERE id_venta =  ?";
-            PreparedStatement ps = conn.prepareStatement(query);
-            ps.setInt(1, id_detalle);
-
-            ps.executeUpdate();
-
-        } catch (Exception e) {
-        }
-    }
-
-    @Override
-    public void ModificarDetalle(DetalleVenta detalle, int id) {
-        try {
-            Connection conn = Conexion.getConexion();
-            String query = "UPDATE detalle_venta (id_producto, cantidad, precio_unitario) "
-                    + "VALUES (?, ?, ?) WHERE id_venta = ? ";
-            PreparedStatement ps = conn.prepareStatement(query);
-            ps.setInt(1, detalle.getId_producto());
-            ps.setInt(2, detalle.getCantidad());
-            ps.setDouble(3, detalle.getPrecio_unitario());
-            ps.setInt(4, id);
-
-            ps.executeUpdate();
-
-            JOptionPane.showMessageDialog(null, "Detalle modificado con exito");
-        } catch (Exception e) {
-        }
-    }
+    
 
     @Override
     public DetalleVenta ConsultarDetalle(int id) {

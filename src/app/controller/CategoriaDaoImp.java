@@ -34,6 +34,8 @@ public class CategoriaDaoImp implements CategoriaDao{
             Connection conn = Conexion.getConexion();
             String query = "DELETE FROM categorias where id_categoria = ?";
             PreparedStatement ps = conn.prepareStatement(query);
+            ps.setInt(1, id);
+            
             ps.executeUpdate();
             JOptionPane.showMessageDialog(null, "Categoria eliminada con éxito");
         } catch (Exception e) {

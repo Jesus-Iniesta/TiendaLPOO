@@ -229,6 +229,8 @@ public class CategoriasFrame extends javax.swing.JFrame {
             int fila = tablaCat.getSelectedRow();
             int id = Integer.parseInt(tablaCat.getValueAt(fila, 0).toString());
             categoriaImp.EliminarCat(id);
+            cargarTabla();
+            limpiarTabla();
         }
     }//GEN-LAST:event_JBtnEliminarActionPerformed
 
@@ -258,6 +260,8 @@ public class CategoriasFrame extends javax.swing.JFrame {
 
             Categoria cat = new Categoria((String) JComboCat.getSelectedItem(), JTextDescripcion.getText());
             categoriaImp.ModificarCategoria(cat, id);
+            cargarTabla();
+            limpiarTabla();
         }
     }//GEN-LAST:event_JBtnModificarActionPerformed
 

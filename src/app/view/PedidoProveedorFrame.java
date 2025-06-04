@@ -146,6 +146,7 @@ public class PedidoProveedorFrame extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Arial Black", 0, 18)); // NOI18N
         jLabel1.setText("Pedidos Proveedor");
 
+        jComboProovedor.setFocusable(false);
         jComboProovedor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboProovedorActionPerformed(evt);

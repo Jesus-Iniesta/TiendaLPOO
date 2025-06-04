@@ -148,6 +148,7 @@ public class VentasFrame extends javax.swing.JFrame {
         });
 
         jCantidad.setModel(new javax.swing.SpinnerNumberModel(1, 1, 100, 1));
+        jCantidad.setFocusable(false);
         jCantidad.addAncestorListener(new javax.swing.event.AncestorListener() {
             public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
                 jCantidadAncestorAdded(evt);
