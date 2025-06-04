@@ -136,7 +136,12 @@ public class PedidoProveedorFrame extends javax.swing.JFrame {
         btnEliminar = new javax.swing.JButton();
         btnLimpiar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Arial Black", 0, 18)); // NOI18N
         jLabel1.setText("Pedidos Proveedor");
@@ -544,6 +549,12 @@ public class PedidoProveedorFrame extends javax.swing.JFrame {
         mes1.select(String.valueOf(Integer.parseInt(partes2[1]))); // Quita el 0 inicial si lo tiene
         dia1.select(String.valueOf(Integer.parseInt(partes2[2])));
     }//GEN-LAST:event_tablapedidoMouseClicked
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // TODO add your handling code here:
+        MenuFrame home = new MenuFrame();
+        home.setVisible(true); 
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments

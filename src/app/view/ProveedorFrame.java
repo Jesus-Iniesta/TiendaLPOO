@@ -86,7 +86,12 @@ public class ProveedorFrame extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         jTextDireccion = new javax.swing.JTextArea();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jPanel1.setToolTipText("");
 
@@ -493,6 +498,12 @@ public class ProveedorFrame extends javax.swing.JFrame {
         jComboDia.setSelectedItem(fecha[2]);
         jComboMes.setSelectedItem(fecha[1]);
     }//GEN-LAST:event_tablaProveedorMouseClicked
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // TODO add your handling code here:
+        MenuFrame home = new MenuFrame();
+        home.setVisible(true); 
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments

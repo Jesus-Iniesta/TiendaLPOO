@@ -10,9 +10,9 @@ import java.sql.SQLException;
 public class Conexion {
     public static Connection getConexion(){
         
-        String url = "jdbc:mysql://localhost:3306/tienda_alfonso";
-        String usuario = "admin_tienda";
-        String contraseña = "TiendaAlfonso324.";
+        String url = "jdbc:mysql://localhost:3306/tienda_1";
+        String usuario = "UsuarioLPOO";
+        String contraseña = "lpoo32.";
         Connection conexion = null;
         try {
             conexion = DriverManager.getConnection(url, usuario, contraseña);

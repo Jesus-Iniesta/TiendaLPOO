@@ -8,6 +8,7 @@ import javax.swing.table.DefaultTableModel;
 import app.controller.ClienteDaoImp;
 import app.model.Cliente;
 import javax.swing.JOptionPane;
+import app.view.MenuFrame;
 /**
  *
  * @author pigim
@@ -49,7 +50,7 @@ public class ClientesForm extends javax.swing.JFrame {
         initComponents();
         cargarTabla();
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -84,7 +85,12 @@ public class ClientesForm extends javax.swing.JFrame {
         jBtnModificar = new javax.swing.JButton();
         jBtnLimpiar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("Lucida Fax", 0, 14)); // NOI18N
         jLabel3.setText("Nombre");
@@ -458,6 +464,12 @@ public class ClientesForm extends javax.swing.JFrame {
         JtextTel.setText(cl.getTelefono());
         JtextCP.setText(cl.getCp());
     }//GEN-LAST:event_tablaclienteMouseClicked
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        
+        MenuFrame home = new MenuFrame();
+        home.setVisible(true);     
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments

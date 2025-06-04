@@ -4,6 +4,7 @@
  */
 package app.view;
 
+import app.view.*;
 /**
  *
  * @author pigim
@@ -35,14 +36,14 @@ public class MenuFrame extends javax.swing.JFrame {
         Jclientes = new javax.swing.JMenuItem();
         jProveedores = new javax.swing.JMenuItem();
         jCat = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
-        jMenuItem3 = new javax.swing.JMenuItem();
-        jMenuItem4 = new javax.swing.JMenuItem();
-        jMenuItem5 = new javax.swing.JMenuItem();
+        jmenuProductos = new javax.swing.JMenuItem();
+        jMenuIPedidos = new javax.swing.JMenuItem();
+        jMenuFactura = new javax.swing.JMenuItem();
+        jMenuVenta = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -58,25 +59,60 @@ public class MenuFrame extends javax.swing.JFrame {
         jMenu1.setText("Menu");
 
         Jclientes.setText("Clientes");
+        Jclientes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JclientesActionPerformed(evt);
+            }
+        });
         jMenu1.add(Jclientes);
 
         jProveedores.setText("Proveedores");
+        jProveedores.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jProveedoresActionPerformed(evt);
+            }
+        });
         jMenu1.add(jProveedores);
 
         jCat.setText("Categorias");
+        jCat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCatActionPerformed(evt);
+            }
+        });
         jMenu1.add(jCat);
 
-        jMenuItem2.setText("Productos");
-        jMenu1.add(jMenuItem2);
+        jmenuProductos.setText("Productos");
+        jmenuProductos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmenuProductosActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jmenuProductos);
 
-        jMenuItem3.setText("Pedidos");
-        jMenu1.add(jMenuItem3);
+        jMenuIPedidos.setText("Pedidos");
+        jMenuIPedidos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuIPedidosActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuIPedidos);
 
-        jMenuItem4.setText("Factura");
-        jMenu1.add(jMenuItem4);
+        jMenuFactura.setText("Factura");
+        jMenuFactura.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuFacturaActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuFactura);
 
-        jMenuItem5.setText("Venta");
-        jMenu1.add(jMenuItem5);
+        jMenuVenta.setText("Venta");
+        jMenuVenta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuVentaActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuVenta);
 
         jMenuBar1.add(jMenu1);
 
@@ -110,7 +146,59 @@ public class MenuFrame extends javax.swing.JFrame {
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         // TODO add your handling code here:
+        this.dispose();
+        LoginFrame login = new LoginFrame();
+        login.setVisible(true);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void JclientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JclientesActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+        ClientesForm cliente = new ClientesForm();
+        cliente.setVisible(true);
+    }//GEN-LAST:event_JclientesActionPerformed
+
+    private void jProveedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jProveedoresActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+        ProveedorFrame proveedor = new ProveedorFrame();
+        proveedor.setVisible(true);
+    }//GEN-LAST:event_jProveedoresActionPerformed
+
+    private void jCatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCatActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+        CategoriasFrame cat = new CategoriasFrame();
+        cat.setVisible(true);
+    }//GEN-LAST:event_jCatActionPerformed
+
+    private void jmenuProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmenuProductosActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+        ProductosFrame productos = new ProductosFrame();
+        productos.setVisible(true);
+    }//GEN-LAST:event_jmenuProductosActionPerformed
+
+    private void jMenuIPedidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuIPedidosActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+        PedidoProveedorFrame pedidos = new PedidoProveedorFrame();
+        pedidos.setVisible(true);
+    }//GEN-LAST:event_jMenuIPedidosActionPerformed
+
+    private void jMenuFacturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuFacturaActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+        FacturaFrame factura = new FacturaFrame();
+        factura.setVisible(true);
+    }//GEN-LAST:event_jMenuFacturaActionPerformed
+
+    private void jMenuVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuVentaActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+        VentasFrame ventas = new VentasFrame();
+        ventas.setVisible(true);
+    }//GEN-LAST:event_jMenuVentaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -143,12 +231,12 @@ public class MenuFrame extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuFactura;
+    private javax.swing.JMenuItem jMenuIPedidos;
     private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
-    private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuVenta;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JMenuItem jProveedores;
+    private javax.swing.JMenuItem jmenuProductos;
     // End of variables declaration//GEN-END:variables
 }

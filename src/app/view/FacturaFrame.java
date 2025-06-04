@@ -85,7 +85,12 @@ public class FacturaFrame extends javax.swing.JFrame {
         JBtnModificar = new javax.swing.JButton();
         JBtnLimpiar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jLabel1.setText("FACTURAS");
 
@@ -404,6 +409,12 @@ public class FacturaFrame extends javax.swing.JFrame {
         
         jTextTotal.setText(factura.regresarTotal(Integer.parseInt(jComboIDVENTA.getSelectedItem().toString()))+"");
     }//GEN-LAST:event_jComboIDVENTAActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        
+        MenuFrame home = new MenuFrame();
+        home.setVisible(true); 
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments

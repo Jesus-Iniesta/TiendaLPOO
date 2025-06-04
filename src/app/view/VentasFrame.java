@@ -113,7 +113,12 @@ public class VentasFrame extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaventa = new javax.swing.JTable();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
         jLabel1.setText("Ventas");
@@ -409,6 +414,12 @@ public class VentasFrame extends javax.swing.JFrame {
         jTextTotal.setText(detalles.getSubtotal()+"");
         jTextPrecio.setText(detalles.getPrecio_unitario()+"");
     }//GEN-LAST:event_tablaventaMouseClicked
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // TODO add your handling code here:
+        MenuFrame home = new MenuFrame();
+        home.setVisible(true); 
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments
